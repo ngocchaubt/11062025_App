@@ -26,4 +26,6 @@
     <string name="title_bonus">Bonus</string>
     <string name="title_document">Document</string>
     <string name="title_information">Information</string>
+    <string name="title_category">Category</string>
+    <string name="title_product">Product</string>
 </resources>
