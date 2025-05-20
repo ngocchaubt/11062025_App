@@ -12,15 +12,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.k22411csampleproject.connectors.CategoryConnector;
-import com.example.k22411csampleproject.connectors.CustomerConnector;
 import com.example.k22411csampleproject.models.Category;
-import com.example.k22411csampleproject.models.Customer;
 
 public class CategoryManagementActivity extends AppCompatActivity {
     ListView lvCategory;
     ArrayAdapter<Category> adapter;
-    CategoryConnector connector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +37,6 @@ public class CategoryManagementActivity extends AppCompatActivity {
                 CategoryManagementActivity.this,
                 android.R.layout.simple_list_item_1
         );
-        connector=new CategoryConnector();
-        adapter.addAll(connector.get_all_categories());
         lvCategory.setAdapter(adapter);
     }
 

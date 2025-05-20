@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,14 +14,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
-import com.example.k22411csampleproject.connectors.ProductConnector;
+import com.example.k22411csampleproject.models.Category;
+import com.example.k22411csampleproject.models.ListCategory;
 import com.example.k22411csampleproject.models.Product;
 
 public class ProductManagementActivity extends AppCompatActivity {
-
+    Spinner spinnerCategory;
+    ArrayAdapter<Category> adapterCategory;
     ListView lvProduct;
-    ArrayAdapter<Product> adapter;
-    ProductConnector connector;
+    ListCategory listCategory;
+    ArrayAdapter<Product> adapterProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +39,38 @@ public class ProductManagementActivity extends AppCompatActivity {
         addEvents();
     }
 
-    private void addViews() {
-        lvProduct=findViewById(R.id.lvProduct);
-        adapter=new ArrayAdapter<>(
-                ProductManagementActivity.this,
-                android.R.layout.simple_list_item_1
-        );
-        connector=new ProductConnector();
-        adapter.addAll(connector.get_all_products());
-        lvProduct.setAdapter(adapter);
-    }
-
     private void addEvents() {
-        lvProduct.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long l) {
-                Product selected = adapter.getItem(i);
-                adapter.remove(selected);
-                return false;
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                Category c = adapterCategory.getItem(i);
+                displayProductsByCategory(c);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
+
+    private void displayProductsByCategory(Category c) {
+        adapterProduct.clear();
+        adapterProduct.addAll(c.getProducts());
+    }
+
+    private void addViews() {
+        spinnerCategory = findViewById(R.id.spinnerCategory);
+        adapterCategory = new ArrayAdapter<>(ProductManagementActivity.this, android.R.layout.simple_list_item_1);
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapterCategory);
+        listCategory = new ListCategory();
+        listCategory.generate_sample_product_dataset();
+        adapterCategory.addAll(listCategory.getCategories());
+        lvProduct= findViewById(R.id.lvProduct);
+        adapterProduct = new ArrayAdapter<>(ProductManagementActivity.this, android.R.layout.simple_list_item_1);
+        lvProduct.setAdapter(adapterProduct);
+    }
 }
+
+
