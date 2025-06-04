@@ -1,5 +1,6 @@
 package com.example.k22411csampleproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,12 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.k22411csampleproject.models.Category;
+import com.example.k22411csampleproject.models.Customer;
 
 public class CategoryManagementActivity extends AppCompatActivity {
     ListView lvCategory;
